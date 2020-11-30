@@ -1,3 +1,7 @@
+//An example unit test class
+//in reality you will be testing some library or code from another project.
+
+
 #pragma once
 
 #include "Calculator.h"
