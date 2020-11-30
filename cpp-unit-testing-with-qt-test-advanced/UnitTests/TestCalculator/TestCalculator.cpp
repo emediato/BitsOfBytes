@@ -8,12 +8,16 @@ void TestCalculator::init()
 }
 
 // -- tests data --
+//Implementing a data function is a bit like inserting data into a database. 
+//First you define your data like if you were defining a table:
+
 void TestCalculator::testDiff_data()
 {
 	QTest::addColumn<int>("a");
 	QTest::addColumn<int>("b");
 	QTest::addColumn<int>("result");
 
+	//Then you add rows of values.Each row contains a name and a list of values:
 	QTest::newRow("all 0") << 0 << 0 << 0;
 	QTest::newRow("same number") << 10 << 10 << 0;
 	QTest::newRow("opposite number") << 10 << -10 << 20;
