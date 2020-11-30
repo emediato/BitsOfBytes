@@ -35,6 +35,10 @@ If there are no Qt signals, use the QTRY_COMPARE() and QTRY_VERIFY() macros, whi
 
 If there are no Qt signals, and you are writing the test as part of developing a new API, consider whether the API could benefit from the addition of a signal that reports the completion of the asynchronous behavior.
 
+# Avoid Q_ASSERT
+
+The Q_ASSERT macro causes a program to abort whenever the asserted condition is false, but only if the software was built in debug mode. In both release and debug-and-release builds, Q_ASSERT does nothing. Instead of Q_ASSERT, the QCOMPARE() or QVERIFY() macro variants should be used. They cause the current test to report a failure and terminate, but allow the remaining test functions to be executed and the entire test program to terminate normally. QVERIFY2() even allows a descriptive error message to be recorded in the test log.
+
 # BITSOFBYTES
 # BitsOfBytes
 In this repository you can find source code and projects from my [blog](http://blog.davidecoppola.com/) posts.
