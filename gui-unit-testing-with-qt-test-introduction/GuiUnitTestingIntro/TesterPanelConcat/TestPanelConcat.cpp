@@ -36,6 +36,9 @@ void TestPanelConcat::init()
 
 void TestPanelConcat::TestConstruction()
 {
+//In this case the test is fairly straightforward as the code is just checking if the different internal widgets are not NULL. 
+//In a real application things can be more complex as some elements are not always created, so it’s important to cover all 
+//the cases when unit testing.
 	QVERIFY2(panel.mInputA, "Input field A not created");
 	QVERIFY2(panel.mInputB, "Input field B not created");
 
@@ -48,16 +51,20 @@ void TestPanelConcat::TestSize()
 	QVERIFY2(panel.minimumHeight() == PanelConcat::MIN_H, "Minimum height not set");
 }
 
+//The first step is performed using the function QTest::keyClicks which simulates a sequence of key clicks on a widget:
 void TestPanelConcat::TestClear()
 {
 	// write into input fields
 	QTest::keyClicks(panel.mInputA, STR1);
 	QTest::keyClicks(panel.mInputB, STR2);
 
-	// click button CONCAT
+	//By default QTest::mouseClick simulates the click in the middle of the widget, 
+	//which is fine for a button, but it is also possible to specify a position.
+	
+	// click button CONCAT = pushing the CONCAT button to get a result
 	QTest::mouseClick(panel.mButtonConcat, Qt::LeftButton);
 
-	// click button CANCEL
+	// click button CANCEL = pushing the CANCEL button to clear all the data
 	QTest::mouseClick(panel.mButtonCancel, Qt::LeftButton);
 
 	// check all fields are empty
@@ -65,6 +72,9 @@ void TestPanelConcat::TestClear()
 	QVERIFY2(panel.mInputB->text().isEmpty(), "Input B not empty");
 	QVERIFY2(panel.mLabelRes->text().isEmpty(), "Label result not empty");
 }
+//A more advanced way of doing GUI unit testing with Qt Test is data driven testing. 
+//The idea is to separate tests and data to avoid to have a long list of similar QVERIFY or QCOMPARE macros 
+//and to replicate all the code needed to initialise a test.
 
 void TestPanelConcat::TestConcat_data()
 {
