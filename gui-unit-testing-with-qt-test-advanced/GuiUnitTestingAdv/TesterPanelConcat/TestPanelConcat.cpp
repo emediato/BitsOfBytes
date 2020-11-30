@@ -32,12 +32,20 @@ void TestPanelConcat::init()
 	mPanel.CancelData();
 }
 
+//When testing focus with Qt Test we are basically simulating an user interacting with our widget using a keyboard.
+
+//Something important to consider when working with focus is that simply calling QWidget::setFocus on a widget won’t work as 
+//the widget is not visible during the execution of a test. What we need to do to get things working is calling the static function
+//QApplication::setActiveWindow on the QWidget we are testing, in this case the PanelConcat object:
+
 void TestPanelConcat::TestFocusOrder()
 {
 	// enables focus and widget events
 	QApplication::setActiveWindow(&mPanel);
 
 	// set initial focus
+	
+	//An extra step to take when testing a widget is to set which element will hold the focus initially with QWidget::setFocus:
 	mPanel.mInputA->setFocus();
 	QVERIFY2(mPanel.mInputA->hasFocus(), "Input A didn't get focus");
 
@@ -54,6 +62,7 @@ void TestPanelConcat::TestFocusOrder()
 	QVERIFY2(mPanel.mButtonCancel->hasFocus(), "Button CANCEL didn't get focus");
 }
 
+//In the real world, it would be better to split this test in two functions.
 void TestPanelConcat::TestFocusUsage()
 {
 	// enables focus and widget events
@@ -91,6 +100,15 @@ void TestPanelConcat::TestFocusUsage()
 	QVERIFY2(mPanel.mInputB->text().isEmpty(), "Cancel didn't work on input B");
 	QVERIFY2(mPanel.mLabelRes->text().isEmpty(), "Cancel didn't work on res label");
 }
+
+//One of the key features of Qt is the object communication based on signals & slots, which basically is an event-based system.
+
+//To test that, Qt Test offers a class called QSignalSpy, which is a QList on steroids that can intercept and record signals.
+
+ //PanelConcat class emits two signals:
+    //DataAvailable(QString) – emitted after CONCAT is pushed and the input text has been merged.
+    //DataCleared() – emitted after CANCEL is pushed and all the text is cleared.
+
 
 void TestPanelConcat::TestSignals()
 {
