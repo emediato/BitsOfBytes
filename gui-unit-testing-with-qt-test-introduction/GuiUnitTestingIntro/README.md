@@ -6,5 +6,6 @@ The widget contains 2 input fields and 2 buttons. Pushing the button “CONCAT�
 
 Testing GUI code normally requires a different approach to normal unit testing. That’s because usually testing public functions of a widget is not enough. To properly test a widget, it’s usually better if the tester class can access all its internal data and functions. The easiest way to achieve that is making the tester class friend of the tested class.
 
+<b> Give acces </b>
 
-
+When testing complex widget structures it could be necessary to provide full class access to more than one tester class. In that case a possible solution is to create a friend visitor class which is used by all the testers.
