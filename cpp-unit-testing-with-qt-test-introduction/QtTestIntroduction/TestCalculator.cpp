@@ -13,6 +13,7 @@ void TestCalculator::testConstructor()
 	// default values
 	Calculator c1;
 
+	//********** verify values
 	QVERIFY(c1.GetA() == 0);
 	QVERIFY(c1.GetB() == 0);
 
@@ -28,6 +29,7 @@ void TestCalculator::testConstructor()
 void TestCalculator::testSum()
 {
 	// sum default
+	//**********compare values
 	QCOMPARE(mCalc.Sum(), A0 + B0);
 
 	// sum after setting a and b
